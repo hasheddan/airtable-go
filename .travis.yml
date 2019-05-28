@@ -1,0 +1,29 @@
+language: go
+
+go:
+  - "1.x"
+  - "1.11.x"
+  - master
+
+matrix:
+  allow_failures:
+    - go: master
+  fast_finish: true
+
+cache:
+  directories:
+    - $HOME/.cache/go-build
+    - $HOME/gopath/pkg/mod
+
+env:
+  global:
+    - GO111MODULE=on
+
+script:
+  - diff -u <(echo -n) <(gofmt -d -s .)
+  - go vet ./...
+  - go test -v -race -coverprofile=coverage.out -covermode=atomic ./...
+  - go test -v -tags=integration -run=^$ ./test/integration # Check that integration test builds successfully, but don't run any of the tests.
+
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
