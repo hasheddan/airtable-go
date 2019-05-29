@@ -1,3 +1,10 @@
+// Copyright 2019 The airtable-go AUTHORS. All rights reserved.
+//
+// Use of this source code is governed by a BSD-style
+// license that can be found in the LICENSE file.
+
+// +build integration
+
 package integration
 
 import (
@@ -12,8 +19,7 @@ func init() {
 	key := os.Getenv("AIRTABLE_KEY")
 	base := os.Getenv("AIRTABLE_BASE")
 	if key == "" || base == "" {
-		print("Must provide key and base to run integration tests. \n\n")
-		os.Exit(1)
+		print("Integration tests will be unable to run successfully without . \n\n")
 	}
 	client = airtable.NewClient(nil, base, key)
 }
