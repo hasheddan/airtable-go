@@ -27,9 +27,23 @@ type Record struct {
 	CreatedTime time.Time              `json:"createdTime,omitempty"`
 }
 
+// TableGetParams defines the available options for returning records of a table
+type TableGetParams struct {
+	Fields        string `param:"fields,omitempty"`
+	Formula       string `param:"filterByFormula,omitempty"`
+	MaxRecords    int    `param:"maxRecords,omitempty"`
+	PageSize      int    `param:"pageSize,omitempty"`
+	SortField     string `param:"sortField,omitempty"`
+	SortDirection string `param:"sortDirection,omitempty"`
+	View          string `param:"view,omitempty"`
+	CellFormat    string `param:"cellFormat,omitempty"`
+	TimeZone      string `param:"timeZone,omitempty"`
+	UserLocale    string `param:"userLocale,omitempty"`
+}
+
 // Get gets records from a table
 func (s *TableService) Get(ctx context.Context) (*Table, error) {
-	req, err := s.client.NewRequest("GET", s.Selected, nil)
+	req, err := s.client.NewRequest("GET", s.Selected, &TableGetParams{}, nil)
 	if err != nil {
 		return nil, err
 	}

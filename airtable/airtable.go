@@ -67,7 +67,7 @@ func (c *Client) Table(name string) *TableService {
 }
 
 // NewRequest makes authenticated requests to the Airtable API
-func (c *Client) NewRequest(method, endpoint string, body interface{}) (*http.Request, error) {
+func (c *Client) NewRequest(method, endpoint string, params interface{}, body interface{}) (*http.Request, error) {
 
 	u, err := c.APIURL.Parse(c.Base + "/" + endpoint)
 	if err != nil {
@@ -102,10 +102,7 @@ func (c *Client) NewRequest(method, endpoint string, body interface{}) (*http.Re
 type Response struct {
 	*http.Response
 
-	NextPage  int
-	PrevPage  int
-	FirstPage int
-	LastPage  int
+	Offset string
 }
 
 // newResponse creates a new Response for the provided http.Response.
